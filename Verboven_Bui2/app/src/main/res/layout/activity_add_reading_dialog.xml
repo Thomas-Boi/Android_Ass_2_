@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <EditText
+        android:id="@+id/systolicEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/systolicHint"
+        android:inputType="text"
+        android:layout_marginTop="@dimen/defaultMargin">
+
+    </EditText>
+
+    <EditText
+        android:id="@+id/diastolicEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/diastolicHint"
+        android:inputType="text"
+        android:layout_below="@+id/systolicEditText"
+        android:layout_marginTop="@dimen/defaultMargin">
+
+    </EditText>
+
+    <Button
+        android:id="@+id/cancelBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/cancelBtn"
+        android:layout_below="@+id/diastolicEditText"
+        android:layout_toStartOf="@+id/submitBtn"
+        android:layout_marginTop="@dimen/defaultMargin"
+        android:layout_marginEnd="@dimen/defaultMargin">
+
+    </Button>
+
+    <Button
+        android:id="@+id/submitBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/submitBtn"
+        android:layout_below="@+id/diastolicEditText"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="@dimen/defaultMargin">
+
+    </Button>
+</RelativeLayout>

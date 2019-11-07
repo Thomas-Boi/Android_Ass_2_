@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Verboven_Bui2</string>
+    <string name="addBtn"> Add Reading </string>
+    <string name="submitBtn"> Submit Reading </string>
+    <string name="cancelBtn"> Cancel Reading</string>
+    <string name="systolicHint"> Enter your Systolic Rate Here</string>
+    <string name="diastolicHint"> Enter your Diastolic Rate Here</string>
 </resources>
