@@ -32,8 +32,7 @@
         android:layout_below="@+id/diastolicEditText"
         android:layout_toStartOf="@+id/submitBtn"
         android:layout_marginTop="@dimen/defaultMargin"
-        android:layout_marginEnd="@dimen/defaultMargin"
-        android:onClick="onCancel">
+        android:layout_marginEnd="@dimen/defaultMargin">
 
     </Button>
 
@@ -44,8 +43,7 @@
         android:text="@string/submitBtn"
         android:layout_below="@+id/diastolicEditText"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="@dimen/defaultMargin"
-        android:onClick="onSubmit">
+        android:layout_marginTop="@dimen/defaultMargin">
 
     </Button>
 </RelativeLayout>

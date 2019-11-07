@@ -7,7 +7,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 
+import java.time.LocalDateTime;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.zip.Inflater;
 
 public class MainActivity extends AppCompatActivity {
@@ -23,25 +28,41 @@ public class MainActivity extends AppCompatActivity {
     }
 
     protected void openAddPopUp() {
-        System.out.println("Running");
         AlertDialog.Builder diaglogBuilder = new AlertDialog.Builder(this);
         LayoutInflater inflater = getLayoutInflater();
 
         View addReadingView = inflater.inflate(R.layout.activity_add_reading_dialog, null);
         diaglogBuilder.setView(addReadingView);
 
-        AlertDialog addReadingDialog = diaglogBuilder.create();
+        final AlertDialog addReadingDialog = diaglogBuilder.create();
         addReadingDialog.show();
-    }
 
-    public void onCancel(View v) {
-    }
+        // set event handlers
+        Button cancelBtn = addReadingView.findViewById(R.id.cancelBtn);
+        cancelBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addReadingDialog.dismiss();
+            }
+        });
 
-    public void onSubmit(View v) {
-        addReading();
+        Button submitBtn = addReadingView.findViewById(R.id.submitBtn);
+        submitBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addReading();
+            }
+        });
     }
 
     protected void addReading() {
+        EditText systolicET = findViewById(R.id.systolicEditText);
+        int systolicReading = Integer.parseInt(systolicET.getText().toString());
 
+        EditText diastolicET = findViewById(R.id.diastolicEditText);
+        int diastolicReading = Integer.parseInt(diastolicET.getText().toString());
+
+        GregorianCalendar curTime = new GregorianCalendar();
+        Reading reading = new Reading(curTime, systolicReading, diastolicReading);
     }
 }
