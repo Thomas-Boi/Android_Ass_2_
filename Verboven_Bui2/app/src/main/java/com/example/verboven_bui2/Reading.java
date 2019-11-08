@@ -1,24 +1,45 @@
 package com.example.verboven_bui2;
 
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.Locale;
-
 
 public class Reading {
 
-    private GregorianCalendar curTime;
+    private String curTime;
+    private String curDate;
     private int systolicReading;
     private int diastolicReading;
     private String condition;
+    private String name;
 
-    public Reading(GregorianCalendar curTime,
-                   int systolicReading, int diastolicReading) {
+    public String getCurTime() {
+        return curTime;
+    }
+
+    public String getCurDate() {
+        return curDate;
+    }
+
+    public int getSystolicReading() {
+        return systolicReading;
+    }
+
+    public int getDiastolicReading() {
+        return diastolicReading;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Reading(String curTime, String curDate,
+                   int systolicReading, int diastolicReading,
+                   String name) {
 
         this.curTime = curTime;
+        this.curDate = curDate;
         this.systolicReading = systolicReading;
         this.diastolicReading = diastolicReading;
         this.condition = analyzeReading();
+        this.name = name;
     }
 
     /**
@@ -30,26 +51,5 @@ public class Reading {
         return "Bad";
     }
 
-    public String getCurDateAsStr() {
-        int year = curTime.get(Calendar.YEAR);
-        int month = curTime.get(Calendar.MONTH);
-        int day = curTime.get(Calendar.DAY_OF_MONTH);
-
-        return day + " "
-                + curTime.getDisplayName(Calendar.MONTH,
-                    Calendar.SHORT,
-                    Locale.CANADA) + " "
-                + year;
-
-    }
-
-    public String getCurTimeAsStr() {
-        int hour = curTime.get(Calendar.HOUR);
-        int min = curTime.get(Calendar.MINUTE);
-        String amPm = curTime.get(Calendar.AM_PM) == Calendar.AM ? "AM" : "PM";
-
-        return hour + ":" + min + amPm;
-    }
-
-
+    public String getCondition() { return this.condition;}
 }
