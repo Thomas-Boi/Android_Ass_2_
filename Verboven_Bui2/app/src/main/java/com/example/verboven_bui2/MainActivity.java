@@ -81,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
 
         EditText nameET = addReadingDialog.findViewById(R.id.nameEditText);
         String name = nameET.getText().toString().trim();
+        String key = readingsDB.push().getKey();
 
         if (TextUtils.isEmpty(systolicReading)) {
             Toast.makeText(this,
@@ -108,13 +109,18 @@ public class MainActivity extends AppCompatActivity {
                 getCurDateAsStr(curTime),
                 Integer.parseInt(systolicReading),
                 Integer.parseInt(diastolicReading),
-                name);
+                key, name);
 
         // go to this function to display the condition
         displayCondition(reading);
 
-        String id = readingsDB.push().getKey();
-        Task task = readingsDB.child(id).setValue(reading);
+
+        Task task = readingsDB.child(name).child(key).setValue(reading);
+
+
+
+
+
 
         task.addOnSuccessListener(new OnSuccessListener() {
             @Override
