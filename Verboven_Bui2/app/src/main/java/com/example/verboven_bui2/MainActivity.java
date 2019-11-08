@@ -54,9 +54,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 readingList.clear();
-                for (DataSnapshot toDoTaskSnapshot : dataSnapshot.getChildren()) {
-                    Reading toDoTask = toDoTaskSnapshot.getValue(Reading.class);
-                    readingList.add(toDoTask);
+                for (DataSnapshot user : dataSnapshot.getChildren()) {
+                    for (DataSnapshot readingSnapshot : user.getChildren()) {
+                        Reading reading = readingSnapshot.getValue(Reading.class);
+                        readingList.add(reading);
+                    }
+
                 }
 
                 ReadingListAdapter adapter = new ReadingListAdapter(MainActivity.this,
