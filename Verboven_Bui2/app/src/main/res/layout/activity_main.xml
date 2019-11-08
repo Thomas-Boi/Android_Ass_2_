@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
+    tools:activityContext=".MainActivity"
     android:orientation="vertical">
 
     <Button
@@ -14,5 +14,18 @@
         android:text="@string/addBtn"
         android:onClick="onAddReading">
     </Button>
+
+
+    <ScrollView
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/addBtn">
+
+        <ListView
+            android:id="@+id/readingLV"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </ScrollView>
 
 </RelativeLayout>

@@ -42,6 +42,11 @@ public class Reading {
         this.name = name;
     }
 
+    // for firebase
+    public Reading() {
+
+    }
+
     /**
      * Check systolic and diastolic reading to find
      * condition.
