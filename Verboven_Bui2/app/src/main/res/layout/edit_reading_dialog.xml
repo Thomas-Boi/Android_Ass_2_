@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/nameLbl"
+        style="@style/editDialogLabels"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_columnWeight="1"
+        android:text="@string/nameLbl"/>
+
+    <EditText
+        android:id="@+id/nameEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:layout_marginTop="@dimen/defaultMargin"
+        android:layout_toEndOf="@+id/nameLbl">
+    </EditText>
+
+    <TextView
+        android:id="@+id/systolicLbl"
+        style="@style/editDialogLabels"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/labelMargin"
+        android:text="@string/systolicLbl"
+        android:layout_below="@+id/nameLbl"/>
+
+    <EditText
+        android:id="@+id/systolicEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:layout_marginTop="@dimen/defaultMargin"
+        android:layout_below="@+id/nameEditText"
+        android:layout_toEndOf="@+id/systolicLbl">
+
+    </EditText>
+
+    <TextView
+        android:id="@+id/diastolicLbl"
+        style="@style/editDialogLabels"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/labelMargin"
+        android:text="@string/systolicLbl"
+        android:layout_below="@+id/systolicLbl"/>
+
+    <EditText
+        android:id="@+id/diastolicEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:layout_below="@+id/systolicEditText"
+        android:layout_marginTop="@dimen/defaultMargin"
+        android:layout_toEndOf="@+id/diastolicLbl">
+
+    </EditText>
+
+    <Button
+        android:id="@+id/deleteBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/deleteBtn"
+        android:layout_below="@+id/diastolicEditText"
+        android:layout_marginTop="@dimen/defaultMargin"
+        android:layout_marginEnd="@dimen/defaultMargin"
+        android:layout_toStartOf="@id/cancelBtn">
+
+    </Button>
+
+    <Button
+        android:id="@+id/cancelBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/cancelBtn"
+        android:layout_below="@+id/diastolicEditText"
+        android:layout_toStartOf="@+id/updateBtn"
+        android:layout_marginTop="@dimen/defaultMargin"
+        android:layout_marginEnd="@dimen/defaultMargin">
+
+    </Button>
+
+    <Button
+        android:id="@+id/updateBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/updateBtn"
+        android:layout_below="@+id/diastolicEditText"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="@dimen/defaultMargin"
+        android:layout_marginEnd="@dimen/defaultMargin">
+
+    </Button>
+
+
+</RelativeLayout>
