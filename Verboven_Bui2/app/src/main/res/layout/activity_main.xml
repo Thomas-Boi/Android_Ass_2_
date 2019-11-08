@@ -15,12 +15,20 @@
         android:onClick="onAddReading">
     </Button>
 
+    <Button
+        android:id="@+id/viewMonthlyBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/viewMonthBtn"
+        android:onClick="onViewMonthlyReading"
+        android:layout_below="@id/addBtn">
+    </Button>
+
 
     <ListView
         android:id="@+id/readingLV"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
-        android:layout_below="@id/addBtn"/>
+        android:layout_below="@id/viewMonthlyBtn"/>
 </RelativeLayout>

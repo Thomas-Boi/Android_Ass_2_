@@ -5,6 +5,7 @@
     <string name="submitBtn"> Submit Reading </string>
     <string name="cancelBtn"> Cancel</string>
     <string name="deleteBtn"> Delete</string>
+    <string name="viewMonthBtn"> View Monthly Stat By User</string>
     <string name="updateBtn"> Update Reading</string>
     <string name="nameHint"> Enter Your Name Here</string>
     <string name="systolicHint"> Enter Systolic Rate Here</string>

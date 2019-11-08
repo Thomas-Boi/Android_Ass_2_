@@ -84,6 +84,12 @@ public class MainActivity extends AppCompatActivity {
         openAddPopUp();
     }
 
+    public void onViewMonthlyReading(View v) {
+        Intent i = new Intent(MainActivity.this, MonthlyStatActivity.class);
+        i.putExtra("readingList", readingList);
+        startActivity(i);
+    }
+
     protected void openAddPopUp() {
         AlertDialog.Builder diaglogBuilder = new AlertDialog.Builder(this);
         LayoutInflater inflater = getLayoutInflater();
