@@ -4,12 +4,23 @@
     android:layout_height="match_parent">
 
     <EditText
+        android:id="@+id/nameEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/nameHint"
+        android:inputType="text"
+        android:layout_marginTop="@dimen/defaultMargin">
+
+    </EditText>
+
+    <EditText
         android:id="@+id/systolicEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/systolicHint"
         android:inputType="text"
-        android:layout_marginTop="@dimen/defaultMargin">
+        android:layout_marginTop="@dimen/defaultMargin"
+        android:layout_below="@+id/nameEditText">
 
     </EditText>
 
@@ -43,7 +54,16 @@
         android:text="@string/submitBtn"
         android:layout_below="@+id/diastolicEditText"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="@dimen/defaultMargin">
+        android:layout_marginTop="@dimen/defaultMargin"
+        android:layout_marginEnd="@dimen/defaultMargin">
 
     </Button>
+
+    <TextView
+        android:id="@+id/conditionTxtView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/submitBtn"
+        android:layout_marginTop="@dimen/defaultMargin"/>
+
 </RelativeLayout>

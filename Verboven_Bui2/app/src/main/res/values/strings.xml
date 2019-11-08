@@ -3,6 +3,7 @@
     <string name="addBtn"> Add Reading </string>
     <string name="submitBtn"> Submit Reading </string>
     <string name="cancelBtn"> Cancel Reading</string>
-    <string name="systolicHint"> Enter your Systolic Rate Here</string>
-    <string name="diastolicHint"> Enter your Diastolic Rate Here</string>
+    <string name="nameHint"> Enter Your Name Here</string>
+    <string name="systolicHint"> Enter Systolic Rate Here</string>
+    <string name="diastolicHint"> Enter Diastolic Rate Here</string>
 </resources>
