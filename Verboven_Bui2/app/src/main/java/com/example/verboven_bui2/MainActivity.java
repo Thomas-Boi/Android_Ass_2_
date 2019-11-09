@@ -101,7 +101,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 addReading();
-                addReadingDialog.dismiss();
             }
         });
     }
@@ -117,6 +116,7 @@ public class MainActivity extends AppCompatActivity {
         String name = nameET.getText().toString().trim();
         String key = readingsDB.push().getKey();
 
+        // check for empty str
         if (TextUtils.isEmpty(systolicReading)) {
             Toast.makeText(this,
                     "You must enter a systolic value.",
@@ -133,16 +133,29 @@ public class MainActivity extends AppCompatActivity {
 
         if (TextUtils.isEmpty(name)) {
             Toast.makeText(this,
-                    "You must enter a diastolic value.",
+                    "You must enter a name.",
                     Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        // check that rates are int
+        int systolicRate;
+        int diastolicRate;
+        try {
+            systolicRate = Integer.parseInt(systolicReading);
+            diastolicRate = Integer.parseInt(diastolicReading);
+        }
+        catch (NumberFormatException e) {
+            Toast.makeText(MainActivity.this,
+                    "Please enter a number here", Toast.LENGTH_LONG).show();
             return;
         }
 
         GregorianCalendar curTime = new GregorianCalendar();
         Reading reading = new Reading(Reading.getCurTimeAsStr(curTime),
                 Reading.getCurDateAsStr(curTime),
-                Integer.parseInt(systolicReading),
-                Integer.parseInt(diastolicReading),
+                systolicRate,
+                diastolicRate,
                 key, name);
 
         // go to this function to display the condition
@@ -170,6 +183,7 @@ public class MainActivity extends AppCompatActivity {
                 e.printStackTrace(System.err);
             }
         });
+        addReadingDialog.dismiss();
     }
 
     public void onViewAllReadings(View v) {
