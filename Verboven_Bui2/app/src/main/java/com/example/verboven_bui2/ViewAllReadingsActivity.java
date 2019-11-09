@@ -4,8 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -17,39 +15,46 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import org.w3c.dom.Text;
-
-import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.GregorianCalendar;
-import java.util.Locale;
-import java.util.zip.Inflater;
 
-public class MainActivity extends AppCompatActivity {
+public class ViewAllReadingsActivity extends AppCompatActivity {
     private DatabaseReference readingsDB;
-    private AlertDialog addReadingDialog;
+    private ListView allReadingsLV;
     private ArrayList<Reading> readingList;
+    private AlertDialog editReadingDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        readingList = new ArrayList<>();
+        setContentView(R.layout.activity_view_all_readings);
+        allReadingsLV = findViewById(R.id.readingLV);
+        readingsDB = FirebaseDatabase.getInstance().getReference("readings");
     }
 
-    protected void onStart() {
+    public void onStart() {
         super.onStart();
-        readingsDB = FirebaseDatabase.getInstance().getReference("readings");
+        // display readings we got from main activity
+        readingList = getIntent().getParcelableArrayListExtra("readingList");
+        ReadingListAdapter adapter = new ReadingListAdapter(ViewAllReadingsActivity.this,
+                readingList);
+        allReadingsLV.setAdapter(adapter);
+
+        allReadingsLV.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                displayEditDialog(position);
+                return true;
+            }
+        });
+
+        // on data change, auto update readingList
         readingsDB.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -61,60 +66,61 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) { }
         });
     }
 
-    public void onAddReading(View v) {
-        openAddPopUp();
-    }
 
-    public void onViewMonthlyReading(View v) {
-        Intent i = new Intent(MainActivity.this, MonthlyStatActivity.class);
-        i.putExtra("readingList", readingList);
-        startActivity(i);
-    }
-
-    protected void openAddPopUp() {
-        AlertDialog.Builder diaglogBuilder = new AlertDialog.Builder(this);
+    private void displayEditDialog(final int index) {
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(
+                ViewAllReadingsActivity.this);
         LayoutInflater inflater = getLayoutInflater();
 
-        View addReadingView = inflater.inflate(R.layout.activity_add_reading_dialog, null);
-        diaglogBuilder.setView(addReadingView);
+        View dialogView = inflater.inflate(R.layout.edit_reading_dialog, null);
 
-        addReadingDialog = diaglogBuilder.create();
-        addReadingDialog.show();
+        TextView nameET = dialogView.findViewById(R.id.nameEditText);
+        TextView systolicET = dialogView.findViewById(R.id.systolicEditText);
+        TextView diastolicET = dialogView.findViewById(R.id.diastolicEditText);
+
+        Reading reading = readingList.get(index);
+        nameET.setText(reading.getName());
+        systolicET.setText(Integer.toString(reading.getSystolicReading()));
+        diastolicET.setText(Integer.toString(reading.getDiastolicReading()));
+
+        dialogBuilder.setView(dialogView);
+        editReadingDialog = dialogBuilder.create();
+        editReadingDialog.show();
 
         // set event handlers
-        Button cancelBtn = addReadingView.findViewById(R.id.cancelBtn);
+        Button cancelBtn = dialogView.findViewById(R.id.cancelBtn);
         cancelBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                addReadingDialog.dismiss();
+                editReadingDialog.dismiss();
             }
         });
 
-        Button submitBtn = addReadingView.findViewById(R.id.submitBtn);
-        submitBtn.setOnClickListener(new View.OnClickListener() {
+        // set event handlers
+        Button updateBtn = dialogView.findViewById(R.id.updateBtn);
+        updateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                addReading();
+                updateReading(index, editReadingDialog);
             }
         });
     }
 
-    protected void addReading() {
-        EditText systolicET = addReadingDialog.findViewById(R.id.systolicEditText);
+    private void updateReading(int readingIndex, AlertDialog editDialog) {
+        // get new values and create new reading
+        EditText systolicET = editDialog.findViewById(R.id.systolicEditText);
         String systolicReading = systolicET.getText().toString().trim();
 
-        EditText diastolicET = addReadingDialog.findViewById(R.id.diastolicEditText);
+        EditText diastolicET = editDialog.findViewById(R.id.diastolicEditText);
         String diastolicReading = diastolicET.getText().toString().trim();
 
-        EditText nameET = addReadingDialog.findViewById(R.id.nameEditText);
+        EditText nameET = editDialog.findViewById(R.id.nameEditText);
         String name = nameET.getText().toString().trim();
-        String key = readingsDB.push().getKey();
 
         // check for empty str
         if (TextUtils.isEmpty(systolicReading)) {
@@ -146,56 +152,32 @@ public class MainActivity extends AppCompatActivity {
             diastolicRate = Integer.parseInt(diastolicReading);
         }
         catch (NumberFormatException e) {
-            Toast.makeText(MainActivity.this,
+            Toast.makeText(ViewAllReadingsActivity.this,
                     "Please enter a number here", Toast.LENGTH_LONG).show();
             return;
         }
 
+        // get the current reading
+        Reading oldReading = readingList.get(readingIndex);
+        String id = oldReading.getKey();
+        String oldName = oldReading.getName();
+
+        // delete old reading
+        readingsDB.child(oldName).child(id).removeValue();
+
+        // create new reading
         GregorianCalendar curTime = new GregorianCalendar();
         Reading reading = new Reading(Reading.getCurTimeAsStr(curTime),
                 Reading.getCurDateAsStr(curTime),
                 systolicRate,
                 diastolicRate,
-                key, name);
+                id, name);
 
-        // go to this function to display the condition
-        displayCondition(reading);
+        readingsDB.child(name).child(id).setValue(reading);
+        Toast.makeText(ViewAllReadingsActivity.this,
+                "Reading Updated", Toast.LENGTH_LONG).show();
 
-
-        Task task = readingsDB.child(name).child(key).setValue(reading);
-
-        task.addOnSuccessListener(new OnSuccessListener() {
-            @Override
-            public void onSuccess(Object o) {
-                Toast.makeText(MainActivity.this,
-                        "Reading added.",
-                        Toast.LENGTH_LONG).show();
-            }
-        });
-
-        task.addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(MainActivity.this,
-                        "Datebase error, please contact creator.",
-                        Toast.LENGTH_LONG).show();
-
-                e.printStackTrace(System.err);
-            }
-        });
-        addReadingDialog.dismiss();
+        // close dialog when done
+        editReadingDialog.dismiss();
     }
-
-    public void onViewAllReadings(View v) {
-        Intent i = new Intent(MainActivity.this, ViewAllReadingsActivity.class);
-        i.putExtra("readingList", readingList);
-        startActivity(i);
-    }
-
-    // put code to display condition here
-    public void displayCondition(Reading reading) {
-        String condition = reading.getCondition();
-
-    }
-
 }

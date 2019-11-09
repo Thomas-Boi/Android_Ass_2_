@@ -1,11 +1,11 @@
 <resources>
     <string name="app_name">Verboven_Bui2</string>
     <string name="addBtn"> Add Reading </string>
-    <string name="viewBtn"> View All Readings </string>
+    <string name="viewAllBtn"> View All Readings </string>
+    <string name="viewMonthBtn"> View Monthly Stat By User</string>
     <string name="submitBtn"> Submit Reading </string>
     <string name="cancelBtn"> Cancel</string>
     <string name="deleteBtn"> Delete</string>
-    <string name="viewMonthBtn"> View Monthly Stat By User</string>
     <string name="updateBtn"> Update Reading</string>
     <string name="nameHint"> Enter Your Name Here</string>
     <string name="systolicHint"> Enter Systolic Rate Here</string>
@@ -15,4 +15,5 @@
     <string name="nameLbl"> User Name:</string>
     <string name="dateLbl"> Date:</string>
     <string name="timeLbl"> Time:</string>
+    <string name="conditionLbl"> Condition:</string>
 </resources>
