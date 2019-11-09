@@ -4,6 +4,10 @@ package com.example.verboven_bui2;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.Locale;
+
 public class Reading implements Parcelable {
 
     private String curTime;
@@ -65,6 +69,28 @@ public class Reading implements Parcelable {
     }
 
     public String getCondition() { return this.condition;}
+
+    public static String getCurDateAsStr(GregorianCalendar curTime) {
+        int year = curTime.get(Calendar.YEAR);
+        int day = curTime.get(Calendar.DAY_OF_MONTH);
+
+        return day + "th "
+                + curTime.getDisplayName(Calendar.MONTH,
+                Calendar.SHORT,
+                Locale.CANADA) + " "
+                + year;
+
+    }
+
+    public static String getCurTimeAsStr(GregorianCalendar curTime) {
+        int hour = curTime.get(Calendar.HOUR);
+        int min = curTime.get(Calendar.MINUTE);
+        String formattedMin = min < 10 ? "0" + min : Integer.toString(min);
+
+        String amPm = curTime.get(Calendar.AM_PM) == Calendar.AM ? "AM" : "PM";
+
+        return hour + ":" + formattedMin + " " + amPm;
+    }
 
     // 99.9% of the time you can just ignore this
     // done for Parcelable

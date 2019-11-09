@@ -15,7 +15,6 @@
 
     <style name="editDialogLabels">
         <item name="android:textStyle">bold</item>
-        <item name="android:layout_marginEnd">20dp</item>
         <item name="android:textSize">20dp</item>
         <item name="android:layout_marginTop">@dimen/labelMargin</item>
     </style>

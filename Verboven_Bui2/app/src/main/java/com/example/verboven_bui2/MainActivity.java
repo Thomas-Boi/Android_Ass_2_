@@ -26,6 +26,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.w3c.dom.Text;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -37,14 +39,12 @@ public class MainActivity extends AppCompatActivity {
     private DatabaseReference readingsDB;
     private AlertDialog addReadingDialog;
     private ArrayList<Reading> readingList;
-    private ListView allReadingsLV;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         readingList = new ArrayList<>();
-        allReadingsLV = findViewById(R.id.readingLV);
     }
 
     protected void onStart() {
@@ -59,24 +59,11 @@ public class MainActivity extends AppCompatActivity {
                         Reading reading = readingSnapshot.getValue(Reading.class);
                         readingList.add(reading);
                     }
-
                 }
-
-                ReadingListAdapter adapter = new ReadingListAdapter(MainActivity.this,
-                        readingList);
-                allReadingsLV.setAdapter(adapter);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) { }
-        });
-
-        allReadingsLV.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                displayEditDialog(position);
-                return true;
-            }
         });
     }
 
@@ -114,6 +101,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 addReading();
+                addReadingDialog.dismiss();
             }
         });
     }
@@ -151,8 +139,8 @@ public class MainActivity extends AppCompatActivity {
         }
 
         GregorianCalendar curTime = new GregorianCalendar();
-        Reading reading = new Reading(getCurTimeAsStr(curTime),
-                getCurDateAsStr(curTime),
+        Reading reading = new Reading(Reading.getCurTimeAsStr(curTime),
+                Reading.getCurDateAsStr(curTime),
                 Integer.parseInt(systolicReading),
                 Integer.parseInt(diastolicReading),
                 key, name);
@@ -162,11 +150,6 @@ public class MainActivity extends AppCompatActivity {
 
 
         Task task = readingsDB.child(name).child(key).setValue(reading);
-
-
-
-
-
 
         task.addOnSuccessListener(new OnSuccessListener() {
             @Override
@@ -189,51 +172,16 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void displayEditDialog(int index) {
-        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(MainActivity.this);
-        LayoutInflater inflater = getLayoutInflater();
-
-        View dialogView = inflater.inflate(R.layout.edit_reading_dialog, null);
-
-        TextView nameET = dialogView.findViewById(R.id.nameEditText);
-        TextView systolicET = dialogView.findViewById(R.id.systolicEditText);
-        TextView diastolicET = dialogView.findViewById(R.id.diastolicEditText);
-
-        Reading reading = readingList.get(index);
-        nameET.setText(reading.getName());
-        systolicET.setText(Integer.toString(reading.getSystolicReading()));
-        diastolicET.setText(Integer.toString(reading.getDiastolicReading()));
-
-        dialogBuilder.setView(dialogView);
-        dialogBuilder.create().show();
+    public void onViewAllReadings(View v) {
+        Intent i = new Intent(MainActivity.this, ViewAllReadingsActivity.class);
+        i.putExtra("readingList", readingList);
+        startActivity(i);
     }
 
     // put code to display condition here
     public void displayCondition(Reading reading) {
         String condition = reading.getCondition();
 
-    }
-
-    private String getCurDateAsStr(GregorianCalendar curTime) {
-        int year = curTime.get(Calendar.YEAR);
-        int day = curTime.get(Calendar.DAY_OF_MONTH);
-
-        return day + "th "
-                + curTime.getDisplayName(Calendar.MONTH,
-                Calendar.SHORT,
-                Locale.CANADA) + " "
-                + year;
-
-    }
-
-    private String getCurTimeAsStr(GregorianCalendar curTime) {
-        int hour = curTime.get(Calendar.HOUR);
-        int min = curTime.get(Calendar.MINUTE);
-        String formattedMin = min < 10 ? "0" + min : Integer.toString(min);
-
-        String amPm = curTime.get(Calendar.AM_PM) == Calendar.AM ? "AM" : "PM";
-
-        return hour + ":" + formattedMin + " " + amPm;
     }
 
 }

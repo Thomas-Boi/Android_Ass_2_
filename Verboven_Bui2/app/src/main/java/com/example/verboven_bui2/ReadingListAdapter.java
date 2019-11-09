@@ -44,13 +44,16 @@ public class ReadingListAdapter extends ArrayAdapter<Reading> {
         TextView diastolicTV = listViewItem.findViewById(R.id.diastolicTV);
         TextView dateTV = listViewItem.findViewById(R.id.dateTV);
         TextView timeTV = listViewItem.findViewById(R.id.timeTV);
+        TextView conditionTV = listViewItem.findViewById(R.id.conditionTV);
 
         Reading reading = readingList.get(position);
+
         nameTV.setText(reading.getName());
         systolicTV.setText(Integer.toString(reading.getSystolicReading()));
         diastolicTV.setText(Integer.toString(reading.getDiastolicReading()));
         dateTV.setText(reading.getCurDate());
         timeTV.setText(reading.getCurTime());
+        conditionTV.setText(reading.getCondition());
 
         return listViewItem;
     }
