@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/nameLbl"
+        style="@style/editDialogLabels"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_columnWeight="1"
+        android:text="@string/nameLbl"/>
+
+    <TextView
+        android:id="@+id/nameTV"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/defaultMargin"
+        android:layout_toEndOf="@+id/nameLbl">
+    </TextView>
+
+    <TextView
+        android:id="@+id/systolicLbl"
+        style="@style/editDialogLabels"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/labelMargin"
+        android:text="@string/systolicLbl"
+        android:layout_below="@+id/nameLbl"/>
+
+    <TextView
+        android:id="@+id/systolicTV"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/defaultMargin"
+        android:layout_below="@+id/nameTV"
+        android:layout_toEndOf="@+id/systolicLbl">
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/diastolicLbl"
+        style="@style/editDialogLabels"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/labelMargin"
+        android:text="@string/diastolicLbl"
+        android:layout_below="@+id/systolicLbl"/>
+
+    <TextView
+        android:id="@+id/diastolicTV"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/systolicTV"
+        android:layout_marginTop="@dimen/defaultMargin"
+        android:layout_toEndOf="@+id/diastolicLbl">
+
+    </TextView>
+</RelativeLayout>
