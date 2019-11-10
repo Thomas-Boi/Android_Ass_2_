@@ -7,6 +7,7 @@
     <string name="cancelBtn"> Cancel</string>
     <string name="deleteBtn"> Delete</string>
     <string name="updateBtn"> Update Reading</string>
+    <string name="okBtn"> OK</string>
     <string name="nameHint"> Enter Your Name Here</string>
     <string name="systolicHint"> Enter Systolic Rate Here</string>
     <string name="diastolicHint"> Enter Diastolic Rate Here</string>
@@ -16,4 +17,8 @@
     <string name="dateLbl"> Date:</string>
     <string name="timeLbl"> Time:</string>
     <string name="conditionLbl"> Condition:</string>
+    <string name="conditionNotif"> Based on your reading, your condition is:</string>
+    <string name="severeCallDoctorStr"> This is severe. You need to see a doctor</string>
+    <string name="badCallDoctorStr"> This can be bad. You should see a doctor</string>
+
 </resources>

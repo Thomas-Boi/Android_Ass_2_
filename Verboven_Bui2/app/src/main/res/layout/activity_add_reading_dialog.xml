@@ -59,11 +59,4 @@
 
     </Button>
 
-    <TextView
-        android:id="@+id/conditionTxtView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/submitBtn"
-        android:layout_marginTop="@dimen/defaultMargin"/>
-
 </RelativeLayout>
