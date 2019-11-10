@@ -15,11 +15,13 @@
 
     <TextView
         android:id="@+id/nameTV"
+        style="@style/editDialogLabels"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/defaultMargin"
-        android:layout_toEndOf="@+id/nameLbl">
-    </TextView>
+        android:layout_columnWeight="1"
+
+        android:layout_marginStart="33dp"
+        android:layout_toEndOf="@+id/nameLbl" />
 
     <TextView
         android:id="@+id/systolicLbl"
@@ -32,10 +34,12 @@
 
     <TextView
         android:id="@+id/systolicTV"
+        style="@style/editDialogLabels"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/defaultMargin"
+        android:layout_columnWeight="1"
         android:layout_below="@+id/nameTV"
+        android:layout_marginStart="46dp"
         android:layout_toEndOf="@+id/systolicLbl">
 
     </TextView>
@@ -51,11 +55,14 @@
 
     <TextView
         android:id="@+id/diastolicTV"
+        style="@style/editDialogLabels"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_columnWeight="1"
         android:layout_below="@+id/systolicTV"
-        android:layout_marginTop="@dimen/defaultMargin"
-        android:layout_toEndOf="@+id/diastolicLbl">
+        android:layout_marginStart="22dp"
+        android:layout_toEndOf="@id/diastolicLbl"
+        android:breakStrategy="high_quality">
 
     </TextView>
 </RelativeLayout>
