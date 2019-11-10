@@ -62,13 +62,34 @@ public class Reading implements Parcelable {
     /**
      * Check systolic and diastolic reading to find
      * condition.
+     *
      * @return condition as a String.
      */
     private String analyzeReading() {
-        return "Bad";
+        if (getDiastolicReading() < 80 && getSystolicReading() < 120) {
+
+            return "Normal";
+
+        }
+        else if (getDiastolicReading() < 80 && getSystolicReading() > 120 &&  getSystolicReading() < 130){
+            return "Elevated";
+        }
+        else if (getDiastolicReading() > 79 && getDiastolicReading() < 90 ||  getSystolicReading() > 129 && getSystolicReading() < 140) {
+            return "High Blood Pressure (Stage 1)";
+        }
+        else if (getDiastolicReading() >= 90 ||  getSystolicReading() >= 140) {
+            return "High Blood Pressure (Stage 2)";
+        }
+        else if (getDiastolicReading() > 120 ||  getSystolicReading() > 180) {
+            return "Hypertensive Crisis";
+        }
+
+        return "N/A";
     }
 
-    public String getCondition() { return this.condition;}
+    public String getCondition() {
+        return this.condition;
+    }
 
     public static String getCurDateAsStr(GregorianCalendar curTime) {
         int year = curTime.get(Calendar.YEAR);
