@@ -42,17 +42,8 @@ public class ViewAllReadingsActivity extends AppCompatActivity {
         super.onStart();
         // display readings we got from main activity
         readingList = getIntent().getParcelableArrayListExtra("readingList");
-        ReadingListAdapter adapter = new ReadingListAdapter(ViewAllReadingsActivity.this,
+        final ReadingListAdapter adapter = new ReadingListAdapter(ViewAllReadingsActivity.this,
                 readingList);
-        allReadingsLV.setAdapter(adapter);
-
-        allReadingsLV.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                displayEditDialog(position);
-                return true;
-            }
-        });
 
         // on data change, auto update readingList
         readingsDB.addValueEventListener(new ValueEventListener() {
@@ -65,9 +56,20 @@ public class ViewAllReadingsActivity extends AppCompatActivity {
                         readingList.add(reading);
                     }
                 }
+                allReadingsLV.setAdapter(adapter);
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) { }
+        });
+
+
+        allReadingsLV.setAdapter(adapter);
+        allReadingsLV.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                displayEditDialog(position);
+                return true;
+            }
         });
     }
 

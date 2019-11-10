@@ -152,15 +152,11 @@ public class MainActivity extends AppCompatActivity {
         }
 
         GregorianCalendar curTime = new GregorianCalendar();
-        Reading reading = new Reading(Reading.getCurTimeAsStr(curTime),
+        final Reading reading = new Reading(Reading.getCurTimeAsStr(curTime),
                 Reading.getCurDateAsStr(curTime),
                 systolicRate,
                 diastolicRate,
                 key, name);
-
-        // go to this function to display the condition
-        displayCondition(reading);
-
 
         Task task = readingsDB.child(name).child(key).setValue(reading);
 
@@ -170,6 +166,8 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this,
                         "Reading added.",
                         Toast.LENGTH_LONG).show();
+                // go to this function to display the condition
+                displayCondition(reading);
             }
         });
 
@@ -195,6 +193,32 @@ public class MainActivity extends AppCompatActivity {
     // put code to display condition here
     public void displayCondition(Reading reading) {
         String condition = reading.getCondition();
+
+        // inflate the condition_dialog.xml into a view
+        LayoutInflater inflater = getLayoutInflater();
+        View conditionView = inflater.inflate(R.layout.condition_dialog, null);
+        TextView conditionTV = conditionView.findViewById(R.id.conditionTV);
+        conditionTV.setText(condition);
+
+        // if condition is severe, tell user to call doctor
+        // please do a check here, there are 2 kinds: badCallDoctorStr
+        // and severeCallDoctorStr (check the strings.xml)
+        TextView callDoctorTV = conditionView.findViewById(R.id.callDoctorTV);
+        callDoctorTV.setText(R.string.severeCallDoctorStr);
+
+        // create the dialog and show it.
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        builder.setView(conditionView);
+        final AlertDialog dialog = builder.create();
+        dialog.show();
+
+        Button okBtn = conditionView.findViewById(R.id.okBtn);
+        okBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
 
     }
 
