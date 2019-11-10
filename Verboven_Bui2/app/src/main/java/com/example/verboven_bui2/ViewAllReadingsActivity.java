@@ -109,6 +109,15 @@ public class ViewAllReadingsActivity extends AppCompatActivity {
                 updateReading(index, editReadingDialog);
             }
         });
+
+        // set event handlers
+        Button deleteBtn = dialogView.findViewById(R.id.deleteBtn);
+        deleteBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                deleteReading(index);
+            }
+        });
     }
 
     private void updateReading(int readingIndex, AlertDialog editDialog) {
@@ -176,6 +185,24 @@ public class ViewAllReadingsActivity extends AppCompatActivity {
         readingsDB.child(name).child(id).setValue(reading);
         Toast.makeText(ViewAllReadingsActivity.this,
                 "Reading Updated", Toast.LENGTH_LONG).show();
+
+        // close dialog when done
+        editReadingDialog.dismiss();
+    }
+
+    private void deleteReading(int readingIndex) {
+
+        // get the current reading
+        Reading oldReading = readingList.get(readingIndex);
+        String id = oldReading.getKey();
+        String oldName = oldReading.getName();
+
+        // delete old reading
+        readingsDB.child(oldName).child(id).removeValue();
+
+
+        Toast.makeText(ViewAllReadingsActivity.this,
+                "Deleted", Toast.LENGTH_LONG).show();
 
         // close dialog when done
         editReadingDialog.dismiss();
