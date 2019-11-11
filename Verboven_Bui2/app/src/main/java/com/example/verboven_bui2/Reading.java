@@ -62,29 +62,30 @@ public class Reading implements Parcelable {
     /**
      * Check systolic and diastolic reading to find
      * condition.
-     *
      * @return condition as a String.
      */
     private String analyzeReading() {
-        if (getDiastolicReading() < 80 && getSystolicReading() < 120) {
-
+        if (getDiastolicReading() < 180 && getSystolicReading() < 120) {
             return "Normal";
+        }
 
-        }
-        else if (getDiastolicReading() < 80 && getSystolicReading() > 120 &&  getSystolicReading() < 130){
-            return "Elevated";
-        }
-        else if (getDiastolicReading() > 79 && getDiastolicReading() < 90 ||  getSystolicReading() > 129 && getSystolicReading() < 140) {
-            return "High Blood Pressure (Stage 1)";
-        }
-        else if (getDiastolicReading() >= 90 ||  getSystolicReading() >= 140) {
-            return "High Blood Pressure (Stage 2)";
-        }
-        else if (getDiastolicReading() > 120 ||  getSystolicReading() > 180) {
+        if (getDiastolicReading() > 120 || getSystolicReading() > 180) {
             return "Hypertensive Crisis";
         }
 
-        return "N/A";
+        if (getDiastolicReading() < 80 && getSystolicReading() >= 120 &&  getSystolicReading() <= 129){
+            return "Elevated";
+        }
+
+        if ((89 >= getDiastolicReading() && getDiastolicReading() >= 80)
+                || (130 <= getSystolicReading() && getSystolicReading() <= 139)) {
+            return "High Blood Pressure (Stage 1)";
+        }
+
+        // once all other options are exhaused, this'll be the only one
+        // remain
+        return "High Blood Pressure (Stage 2)";
+
     }
 
     public String getCondition() {

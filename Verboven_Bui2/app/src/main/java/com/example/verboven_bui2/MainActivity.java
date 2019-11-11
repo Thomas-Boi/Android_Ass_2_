@@ -200,11 +200,13 @@ public class MainActivity extends AppCompatActivity {
         TextView conditionTV = conditionView.findViewById(R.id.conditionTV);
         conditionTV.setText(condition);
 
-        // if condition is severe, tell user to call doctor
-        // please do a check here, there are 2 kinds: badCallDoctorStr
-        // and severeCallDoctorStr (check the strings.xml)]
         TextView callDoctorTV = conditionView.findViewById(R.id.callDoctorTV);
-        callDoctorTV.setText(R.string.severeCallDoctorStr);
+        if (condition.contains("High Blood Pressure")) {
+            callDoctorTV.setText(R.string.badCallDoctorStr);
+        }
+        else if (condition.equals("Hypertensive Crisis")) {
+            callDoctorTV.setText(R.string.severeCallDoctorStr);
+        }
 
         // create the dialog and show it.
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
