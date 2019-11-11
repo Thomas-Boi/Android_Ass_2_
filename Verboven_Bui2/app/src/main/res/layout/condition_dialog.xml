@@ -12,12 +12,16 @@
     <TextView
         android:id="@+id/conditionTV"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:textStyle="bold"/>
 
     <TextView
         android:id="@+id/callDoctorTV"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/defaultMargin"
+        android:textSize="20sp"/>
 
     <Button
         android:id="@+id/okBtn"
